@@ -47,7 +47,7 @@ const HomeView: FunctionComponent = () => {
       const res = await covidService.get(name);
       setImg(options.children[0].props.src);
       setCovidData(res.data.All);
-      const resVa = await covidService.getVac(options.children[1]);
+      const resVa = await covidService.getVac(options.key);
       setCaccines(resVa.data.All);
       setIsLoadingData(false);
       setIsLoadingCovid(false);
@@ -87,8 +87,8 @@ const HomeView: FunctionComponent = () => {
           loading={isLoadingCovid}
           disabled={isLoadingCovid || isLoadingData}
         >
-          {countries?.map(({ name, flag, alpha2Code }) => (
-            <Select.Option value={alpha2Code}>
+          {countries?.map(({ name, flag, alpha2Code, nativeName }) => (
+            <Select.Option value={alpha2Code} key={nativeName}>
               <img src={flag} style={{ width: "20px", marginRight: "8px" }} />
               {name}
             </Select.Option>
