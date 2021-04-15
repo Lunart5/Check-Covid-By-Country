@@ -153,7 +153,7 @@ const HomeView: FunctionComponent = () => {
               <Value className="value">
                 {vaccines.administered.toLocaleString()}
               </Value>
-              <Title className="title">Vaccines Partially Applyed</Title>
+              <Title className="title">Vaccines Partially Applied</Title>
               <Value className="value">
                 {vaccines.people_partially_vaccinated.toLocaleString()}
               </Value>
