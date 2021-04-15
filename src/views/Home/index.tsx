@@ -87,10 +87,10 @@ const HomeView: FunctionComponent = () => {
           loading={isLoadingCovid}
           disabled={isLoadingCovid || isLoadingData}
         >
-          {countries?.map(({ nativeName, flag, alpha2Code }) => (
+          {countries?.map(({ name, flag, alpha2Code }) => (
             <Select.Option value={alpha2Code}>
               <img src={flag} style={{ width: "20px", marginRight: "8px" }} />
-              {nativeName}
+              {name}
             </Select.Option>
           ))}
         </Select>
@@ -150,7 +150,7 @@ const HomeView: FunctionComponent = () => {
               title="Vaccines Data"
               visible={isModalVisible}
               onCancel={handleModalShow}
-              width={"90%"}
+              width={"350px"}
               footer={[
                 <Button
                   style={{ borderRadius: "8px" }}
