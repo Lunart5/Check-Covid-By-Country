@@ -13,3 +13,12 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
 `;
+export const GridContent = styled.div`
+  display: grid;
+  grid-template-columns: auto auto;
+  text-align: center;
+  width: 100%;
+  height: auto;
+`;
+export const Title = styled.h2``;
+export const Value = styled.h2``;
