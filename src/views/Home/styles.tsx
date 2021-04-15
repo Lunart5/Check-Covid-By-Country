@@ -5,7 +5,7 @@ export const Container = styled.div`
   justify-content: flex-start;
   align-items: center;
   height: 80%;
-  max-width: 480px;
+  margin: 24px;
   width: 100%;
   padding: 16px;
   background: #fcfdfd;
@@ -22,3 +22,14 @@ export const GridContent = styled.div`
 `;
 export const Title = styled.h2``;
 export const Value = styled.h2``;
+
+export const LoadingDiv = styled.div`
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+  span {
+    margin-left: 10px;
+  }
+`;

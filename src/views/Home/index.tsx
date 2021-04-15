@@ -1,12 +1,12 @@
 import React, { FunctionComponent, useEffect, useState } from "react";
 import LayoutComponent from "../layout";
-import { Container, GridContent, Title, Value } from "./styles";
+import { Container, GridContent, Title, Value, LoadingDiv } from "./styles";
 import Head from "next/head";
-import { Select, Modal, Card, Button } from "antd";
+import { Select, Modal, Card, Button, Spin } from "antd";
 import covidService from "../api/services/covidService";
 import countryService from "../api/services/countriesService";
 import { InfoCircleTwoTone } from "@ant-design/icons";
-
+import { LoadingOutlined } from "@ant-design/icons";
 const HomeView: FunctionComponent = () => {
   type covidDataType = {
     capital_city: string;
@@ -94,76 +94,91 @@ const HomeView: FunctionComponent = () => {
             </Select.Option>
           ))}
         </Select>
-        {covidData &&
-          (isLoadingData ? (
-            <div>Loading Data...</div>
-          ) : (
-            <Card
-              style={{
-                borderRadius: "8px",
-                marginTop: "16px",
-                maxWidth: "90%",
-              }}
-              title={
-                <h2 style={{ textAlign: "center" }}>{covidData.country}</h2>
-              }
-              cover={
-                <img src={Img} style={{ width: "25%", margin: "10px auto" }} />
-              }
-            >
-              <GridContent>
-                <Title className="title">Cases Confirmed</Title>
-                <Value className="value">
-                  {covidData.confirmed.toLocaleString()}
-                </Value>
-                <Title className="title">Cases Recovered</Title>
-                <Value className="value">
-                  {covidData.recovered.toLocaleString()}
-                </Value>
-                <Title className="title">Death</Title>
-                <Value className="value">
-                  {covidData.deaths.toLocaleString()}
-                </Value>
-              </GridContent>
-              <div style={{ textAlign: "center" }}>
+        {isLoadingData ? (
+          <LoadingDiv>
+            Loading Data...{" "}
+            <Spin
+              indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />}
+            />
+          </LoadingDiv>
+        ) : (
+          <>
+            {covidData && (
+              <Card
+                style={{
+                  borderRadius: "8px",
+                  marginTop: "16px",
+                  maxWidth: "90%",
+                }}
+                title={
+                  <h2 style={{ textAlign: "center" }}>{covidData.country}</h2>
+                }
+                cover={
+                  <img
+                    src={Img}
+                    style={{ width: "25%", margin: "10px auto" }}
+                  />
+                }
+              >
+                <GridContent>
+                  <Title className="title">Cases Confirmed</Title>
+                  <Value className="value">
+                    {covidData.confirmed.toLocaleString()}
+                  </Value>
+                  <Title className="title">Cases Recovered</Title>
+                  <Value className="value">
+                    {covidData.recovered.toLocaleString()}
+                  </Value>
+                  <Title className="title">Death</Title>
+                  <Value className="value">
+                    {covidData.deaths.toLocaleString()}
+                  </Value>
+                </GridContent>
+                <div style={{ textAlign: "center" }}>
+                  <Button
+                    size="large"
+                    style={{ borderRadius: "8px" }}
+                    icon={<InfoCircleTwoTone twoToneColor="#c4c11a" />}
+                    onClick={handleModalShow}
+                  >
+                    See More
+                  </Button>
+                </div>
+              </Card>
+            )}
+            <Modal
+              title="Vaccines Data"
+              visible={isModalVisible}
+              onCancel={handleModalShow}
+              width={"90%"}
+              footer={[
                 <Button
-                  size="large"
                   style={{ borderRadius: "8px" }}
-                  icon={<InfoCircleTwoTone twoToneColor="#c4c11a" />}
                   onClick={handleModalShow}
                 >
-                  See More
-                </Button>
-              </div>
-            </Card>
-          ))}
-        <Modal
-          title="Vaccines Data"
-          visible={isModalVisible}
-          onCancel={handleModalShow}
-          footer={[
-            <Button style={{ borderRadius: "8px" }} onClick={handleModalShow}>
-              Close
-            </Button>,
-          ]}
-        >
-          {vaccines && (
-            <GridContent>
-              <Title className="title">Vaccines Administred</Title>
-              <Value className="value">
-                {vaccines.administered.toLocaleString()}
-              </Value>
-              <Title className="title">Vaccines Partially Applied</Title>
-              <Value className="value">
-                {vaccines.people_partially_vaccinated.toLocaleString()}
-              </Value>
-              <Title className="title">People Vaccinated</Title>
-              <Value className="value">
-                {vaccines.people_vaccinated.toLocaleString()}
-              </Value>
-            </GridContent>
-          )}
-        </Modal>
+                  Close
+                </Button>,
+              ]}
+            >
+              {vaccines && (
+                <GridContent>
+                  <Title className="title">Vaccines Administred</Title>
+                  <Value className="value">
+                    {vaccines.administered.toLocaleString()}
+                  </Value>
+                  <Title className="title">Vaccines Partially Applied</Title>
+                  <Value className="value">
+                    {vaccines.people_partially_vaccinated.toLocaleString()}
+                  </Value>
+                  <Title className="title">People Vaccinated</Title>
+                  <Value className="value">
+                    {vaccines.people_vaccinated.toLocaleString()}
+                  </Value>
+                </GridContent>
+              )}
+            </Modal>
+          </>
+        )}
       </Container>
     </LayoutComponent>
   );
